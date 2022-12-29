@@ -6,24 +6,41 @@
 //
 
 import SwiftUI
+//import CoreLocation
 
 struct ContentView: View {
+    
+    var weatherManager = WeatherManager()
+    
+    @State var weather: ResponseBody
+    @State var showingAlert: Bool = false
+    
     
     @State private var location: String = ""
     @FocusState private var locationIsFocused: Bool
     
     var body: some View {
         
+        if weather.name == "DefaultWeatherValue" {
+            
+            ActivityIndicator()
+                .frame(width: 100, height: 100)
+                .onAppear(perform: {
+                location = "New York"
+                    update()
+                })
+            
+        } else {
+        
         ZStack {
             Color("bgColor").ignoresSafeArea()
-        
             
             VStack {
                 
                 // header
                 HStack {
                     Button(action: {
-                        print("Refresh")
+                        
                     }) {
                         Label("", systemImage: "safari").font(.system(size: 24))
                     }
@@ -34,49 +51,97 @@ struct ContentView: View {
                         .submitLabel(.done)
                         .focused($locationIsFocused)
                         .onSubmit {
-                            searchPressed()
-                                    }
+                            update()
+                            locationIsFocused = false
+                        }
                     
                     Button(action: {
-                        searchPressed()
+                        update()
+                        //searchPressed()
                         locationIsFocused = false
                     }) {
                         Label("", systemImage: "magnifyingglass").font(.system(size: 24))
                     }
                 }.padding() // nav bar
-        
-                HStack{ Text("Lagos").font(.largeTitle).foregroundColor(Color("headerText"))
-                    .bold()
+                
+                VStack(alignment: .leading) {
                     
-            }.frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)//header
+                    HStack(alignment: .firstTextBaseline, spacing: 0){
+                        Text(weather.name).font(.largeTitle).foregroundColor(Color("headerText"))
+                            .bold()
+                        
+                        Text(", " + weather.sys.country).font(.title3).foregroundColor(Color("headerText"))
+                            .bold()
+                    }
+                    
+                    Text("Today, \(Date().formatted(.dateTime.day().month().hour().minute()))").font(.footnote).foregroundColor(Color("headerText"))
+                    
+                }.frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)//header
                 
                 ScrollView {
-                WeatherView()
-                
-                StatsView()
+                    WeatherView(weather: $weather)
+                    
+                    StatsView(weather: $weather)
                 }
                 
-        } // main vstack
-         // geo reader
+            } // main vstack
+            // geo reader
+        }.alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Location not found :("),
+                message: Text("Please try again"),
+                dismissButton: .default(Text("Got it!")))
         } // zstack
+        
+        }
     }//main view
     
-    func searchPressed() {
-        if location != "" {
-            print($location)
-            location = ""
-        } else {
-            return
+    func searchPressed() async {
+        do {
+            if location != "" {
+                var checkWeather = try await weatherManager.getCurrentManager(location: location.trimmingCharacters(in: .punctuationCharacters).replacingOccurrences(of: " ", with: "%20"))
+                
+                if checkWeather.name == "Error Message"  {
+                    showingAlert = true
+                } else {
+                    weather = checkWeather
+                }
+                
+                print($location)
+                location = ""
+            } else {
+                return
+            }
+        } catch {
+            print("error")
         }
     }
+    
+    
+    
+    func update() {
+        if (weather.name == "Error Message") {
+            showingAlert = true
+        } else {
+        Task {
+            do {
+                try await searchPressed()
+            } catch {
+                print("error")
+            }
+        }
+        }
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(weather: previewWeather)
             .previewDevice("iPhone 13")
-        ContentView()
+        ContentView(weather: previewWeather)
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone SE")
     }
 }
