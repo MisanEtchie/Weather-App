@@ -17,6 +17,9 @@ struct ContentView: View {
     
     
     @State private var location: String = ""
+    
+    @State private var savedLocation: String = UserDefaults.standard.string(forKey: "LoctionKey") ?? "New York"
+    
     @FocusState private var locationIsFocused: Bool
     
     var body: some View {
@@ -26,7 +29,7 @@ struct ContentView: View {
             ActivityIndicator()
                 .frame(width: 100, height: 100)
                 .onAppear(perform: {
-                location = "New York"
+                location = savedLocation
                     update()
                 })
             
@@ -39,11 +42,14 @@ struct ContentView: View {
                 
                 // header
                 HStack {
-                    Button(action: {
+                    
+                    Image(systemName: "safari").font(.system(size: 24)).foregroundColor(.accentColor)
+                    
+                    /*Button(action: {
                         
                     }) {
                         Label("", systemImage: "safari").font(.system(size: 24))
-                    }
+                    }*/
                     
                     TextField("Search Location...", text: $location).textInputAutocapitalization(.words)
                         .padding(8)
@@ -89,7 +95,7 @@ struct ContentView: View {
             // geo reader
         }.alert(isPresented: $showingAlert) {
             Alert(
-                title: Text("Location not found :("),
+                title: Text("Location not found "),
                 message: Text("Please try again"),
                 dismissButton: .default(Text("Got it!")))
         } // zstack
@@ -100,6 +106,7 @@ struct ContentView: View {
     func searchPressed() async {
         do {
             if location != "" {
+                
                 var checkWeather = try await weatherManager.getCurrentManager(location: location.trimmingCharacters(in: .punctuationCharacters).replacingOccurrences(of: " ", with: "%20"))
                 
                 if checkWeather.name == "Error Message"  {
@@ -108,6 +115,8 @@ struct ContentView: View {
                     weather = checkWeather
                 }
                 
+                UserDefaults.standard.set(location, forKey: "LoctionKey")
+                savedLocation = location
                 print($location)
                 location = ""
             } else {
@@ -126,7 +135,8 @@ struct ContentView: View {
         } else {
         Task {
             do {
-                try await searchPressed()
+                try await
+                searchPressed()
             } catch {
                 print("error")
             }
