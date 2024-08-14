@@ -45,6 +45,8 @@ struct WindView: View {
                 
             }.padding(.horizontal).padding(.top)
             
+            Spacer()
+            
             
             HStack{
                 Image(systemName: "wind")
@@ -55,11 +57,11 @@ struct WindView: View {
                     Spacer()
             }.padding()
             
-            Spacer()
+            
             
         }.frame(
             maxWidth: .infinity,
-            maxHeight: 130
+            maxHeight: 170
         )
         .background(Color("lightGray"))
         .cornerRadius(15).padding(.horizontal)

@@ -16,7 +16,7 @@ struct StatsView: View {
                 VStack{
                     Text("Pressure").foregroundColor(.white)
                         .font(.caption)
-                    Text(String(weather.main.pressure) + "mb").bold().foregroundColor(.white)
+                    Text(String(weather.main.pressure) + "mb").font(.callout).bold().foregroundColor(.white)
                 }.padding()
                     .frame(
                         maxWidth: .infinity,
@@ -29,7 +29,7 @@ struct StatsView: View {
                     Text("Visibility").foregroundColor(.white)
                         .font(.caption)
                     
-                    Text(String(weather.visibility / 1000) + "km").bold().foregroundColor(.white)
+                    Text(String(weather.visibility / 1000) + "km").font(.callout).bold().foregroundColor(.white)
                 }.padding()
                     .frame(
                         maxWidth: .infinity,
@@ -41,7 +41,7 @@ struct StatsView: View {
                 VStack{
                     Text("Humidity").foregroundColor(Color("darkBlue"))
                         .font(.caption)
-                    Text(String(weather.main.humidity) + "%").bold().foregroundColor(Color("darkBlue"))
+                    Text(String(weather.main.humidity) + "%").font(.callout).bold().foregroundColor(Color("darkBlue"))
                 }.padding()
                     .frame(
                         maxWidth: .infinity,
