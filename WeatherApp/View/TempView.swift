@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TempView: View {
     @Binding var weather: ResponseBody
+    var unit: String
     
     var body: some View {
         VStack {
@@ -26,7 +27,9 @@ struct TempView: View {
                         
                         Text("Min Temp").bold().foregroundColor(.white)
                         
-                        Text(String(weather.main.tempMin.roundDouble()) + "°C" ).foregroundColor(.white).bold().frame(alignment: .trailing)//.padding()
+                       
+                        
+                        Text("\(weather.main.tempMin.roundDouble())\(unit == "Metric" ? "°C" : "°F")" ).foregroundColor(.white).bold().frame(alignment: .trailing)//.padding()
                     }
                 }
                 
@@ -38,7 +41,7 @@ struct TempView: View {
                     VStack (alignment: .leading){
                         Text("Max Temp").bold().foregroundColor(.white)
                         
-                        Text(String(weather.main.tempMax.roundDouble()) + "°C" ).foregroundColor(.white).bold().frame(alignment: .trailing)//.padding()
+                        Text( "\(weather.main.tempMax.roundDouble())\(unit == "Metric" ? "°C" : "°F")" ).foregroundColor(.white).bold().frame(alignment: .trailing)//.padding()
                     }
                 }
                 
@@ -59,6 +62,6 @@ struct TempView: View {
 struct TempView_Previews: PreviewProvider {
     @State static var weather: ResponseBody = previewWeather
     static var previews: some View {
-        TempView(weather: $weather)
+        TempView(weather: $weather, unit: "Metric")
     }
 }

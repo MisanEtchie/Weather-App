@@ -1,68 +1,88 @@
 //
-//  WeatherView.swift
+//  WeatherNowView.swift
 //  WeatherApp
 //
-//  Created by Misan Etchie on 18/12/2022.
+//  Created by Misan on 9/14/24.
 //
 
 import SwiftUI
 
-struct WeatherView: View {
+struct WeatherNowView: View {
     @Binding var weather: ResponseBody
     var unit: String
     var image: String = "clear"
     let half = (UIScreen.main.bounds.width / (3/3))
     let point = (UIScreen.main.bounds.width / (4))
-//    @State private var savedUnit: String = UserDefaults.standard.string(forKey: "UnitKey") ?? "Imperial"
-    //savedUnit == "Metric" ? "°C" : "°F"
-    
     var body: some View {
         VStack {
+            
+            Text("Weather right now...").foregroundColor(.white).font(.system(size: 20.0))
+                .bold()
+                //.shadow(color: .black, radius: 3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom, 12)
+            
+          
+            
+            
             HStack{
                 Image(systemName: getIcon())
                 //.font(.system(size: 30))
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.accentColor)
-                    .frame(width: 35, height: 35).padding(6).background(Color(.white)).cornerRadius(30)
-                VStack{
-                    Text("Weather").foregroundColor(.white).bold().shadow(color: .black, radius: 5).frame(maxWidth: .infinity, alignment: .leading)
-                    Text("What's the weather?").foregroundColor(.white).bold().shadow(color: .black, radius: 5)
-                        .font(.caption).frame(maxWidth: .infinity, alignment: .leading)
-                }
-                Spacer()
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 50).padding(6)
+                    //.background(Color(.white))
+                    .cornerRadius(30)
                 
-            }.padding().padding(.top)
-                .padding(.bottom, 25)
+                VStack (spacing: 0){
+                    Text(
+                         
+                         "\(weather.main.temp.roundDouble())\(unit == "Metric" ? "°C" : "°F")"
+                    
+                    ).font(.system(size: 30.0)).foregroundColor(.white)
+                        .bold()
+                        //.shadow(color: .black, radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text(weather.weather[0].description.capitalized).foregroundColor(.white).font(.system(size: 20.0))
+                        .bold()
+                        //.shadow(color: .black, radius: 3)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+            }
             
-            //Text(String(weather.main.temp))
+          
             
-            Text("\(weather.main.temp.roundDouble())\(unit == "Metric" ? "°C" : "°F")").font(.system(size: 40.0)).foregroundColor(.white)
-                .bold()
-                .shadow(color: .black, radius: 5)
-                .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal).padding(.bottom, 4)
             
-            Text(weather.weather[0].description.capitalized).foregroundColor(.white).font(.system(size: 20.0))
-                .bold()
-                .shadow(color: .black, radius: 3).frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal).padding(.bottom, point)
             
-            Spacer()
+           
+            
+            
         }// weather image box
+        .padding(.horizontal)
+        .padding(.vertical, 30)
         .frame(
-            maxWidth: .infinity,
-            maxHeight: half
+            maxWidth: .infinity
+            //maxHeight: 170
         )
         .background(
-            Image(getImage())
-                .resizable()
-                .scaledToFill()
+            ZStack {
+                Image(getImage())
+                    .resizable()
+                    .scaledToFill()
+                
+                LinearGradient(
+                                   gradient: Gradient(colors: [Color("darkBlue"), Color.clear]),
+                                   startPoint: .leading,
+                                   endPoint: .trailing
+                               )
+            }
         )
         .cornerRadius(15)
         .padding(.horizontal)
     }
-    
-    
-   
     
     func getImage() -> String {
         
@@ -119,11 +139,11 @@ struct WeatherView: View {
     }
 }
 
-struct WeatherView_Previews: PreviewProvider {
+struct WeatherNowView_Previews: PreviewProvider {
     
     @State static var weather: ResponseBody = previewWeather
     
     static var previews: some View {
-        WeatherView(weather: $weather, unit: "Metric")
+        WeatherNowView(weather: $weather, unit: "Metric")
     }
 }

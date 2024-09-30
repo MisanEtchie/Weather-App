@@ -9,20 +9,28 @@ import SwiftUI
 
 struct WindView: View {
     @Binding var weather: ResponseBody
+    var unit: String
     
-    
-    func getWindSpeed (windS: Double) -> String {
+    func getWindSpeed (windSpeed: Double) -> String {
+        
+        let windS: Double
+                if unit.lowercased() == "imperial" {
+                    windS = windSpeed * 1.60934// Convert mph to km/h
+                } else {
+                    windS = windSpeed * 3.6// Assume it's already in km/h
+                }
+        
         if (windS <= 5) {
             return "Calm"
         } else if (windS <= 38) {
             return "Breeze"
         }
-        else if (windS <= 61) {
+        else if (windS <= 49) {
             return "Strong Breeze"
         }
         else if (windS <= 74) {
             return "Gale"
-        } else if (windS <= 117) {
+        } else if (windS <= 107) {
             return "Storm"
         } else {
             return "Hurricane"
@@ -38,7 +46,7 @@ struct WindView: View {
             HStack {
                 Text("Wind Speed").foregroundColor(Color("darkBlue")).bold().frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text(getWindSpeed(windS: weather.wind.speed)).bold()
+                Text(getWindSpeed(windSpeed: weather.wind.speed)).bold()
                     .foregroundColor(.white).padding(.horizontal).padding(.vertical, 4)
                 .background(Color("orange"))
                 .cornerRadius(10)//.padding(.horizontal)
@@ -52,7 +60,7 @@ struct WindView: View {
                 Image(systemName: "wind")
                     .font(.system(size: 30).bold()).foregroundColor(Color("darkBlue"))
                 
-                Text (String(weather.wind.speed) + "km/h").foregroundColor(Color("darkBlue")).font(.system(size: 30.0)).bold()
+                Text ("\(String(weather.wind.speed)) \(unit == "Metric" ? "m/s" : "mph")").foregroundColor(Color("darkBlue")).font(.system(size: 30.0)).bold()
                 
                     Spacer()
             }.padding()
@@ -71,6 +79,6 @@ struct WindView: View {
 struct WindView_Previews: PreviewProvider {
     @State static var weather: ResponseBody = previewWeather
     static var previews: some View {
-        WindView(weather: $weather)
+        WindView(weather: $weather, unit: "Metric")
     }
 }

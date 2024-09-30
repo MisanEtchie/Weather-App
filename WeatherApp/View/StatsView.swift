@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StatsView: View {
     @Binding var weather: ResponseBody
+    var unit: String
     
     var body: some View {
         VStack{
@@ -53,9 +54,9 @@ struct StatsView: View {
             }.padding() // first Hstack
             
             
-            WindView(weather: $weather)
+            WindView(weather: $weather, unit: unit)
             
-            TempView(weather: $weather)
+            TempView(weather: $weather, unit: unit)
             
             
             SunView(weather: $weather)
@@ -76,6 +77,6 @@ struct StatsView_Previews: PreviewProvider {
     @State static var weather: ResponseBody = previewWeather
     
     static var previews: some View {
-        StatsView(weather: $weather)
+        StatsView(weather: $weather, unit: "Metric")
     }
 }

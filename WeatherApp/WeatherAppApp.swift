@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct WeatherAppApp: App {
+    @StateObject private var settings = Settings()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(weather: previewWeather)
+            ContentView(weather: previewWeather, forecast: previewForecast)
+                .environmentObject(settings)
         }
     }
 }

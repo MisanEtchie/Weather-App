@@ -7,24 +7,26 @@
 
 import SwiftUI
 
+func convertTimestamp(_ timestamp: TimeInterval, timezoneOffset: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: timestamp + timezoneOffset)
+        
+        // Create a date formatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        
+        // Set the time zone to GMT 0 (Accra time)
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        // Format the date
+        return dateFormatter.string(from: date)
+    }
+
+
 struct SunView: View {
     @Binding var weather: ResponseBody
     
     //@State private var value: CGFloat = 50
     
-    func convertTimestamp(_ timestamp: TimeInterval, timezoneOffset: TimeInterval) -> String {
-            let date = Date(timeIntervalSince1970: timestamp + timezoneOffset)
-            
-            // Create a date formatter
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "h:mm a"
-            
-            // Set the time zone to GMT 0 (Accra time)
-            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            
-            // Format the date
-            return dateFormatter.string(from: date)
-        }
     
     
     
@@ -35,70 +37,75 @@ struct SunView: View {
         
         
         
-        HStack {
-            
-            HStack {
-                Image(systemName: "sun.min")
-                    .font(.system(size: 30)).foregroundColor(.white)
-                VStack{
-                    
-                    let riseDate = convertTimestamp(TimeInterval(weather.sys.sunrise), timezoneOffset: weather.timezone)
-                    
-                    
-                    
-                    //Date.init(timeIntervalSinceNow: TimeInterval(weather.sys.sunset))
-                    
-                    
-                    
-                    
-                    
-                    Text("Sunrise").foregroundColor(.white).bold()
-                    
-                    
-                    Text(riseDate) .font(.system(size: 15.0))
-                    .bold()
-                    .foregroundColor(.white)
-                }
-            }.padding()
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: 100
-                )
-                .background(Color("orange"))
-                .cornerRadius(15)
-                .padding(.trailing, 12)
-            
-            
-//            SemiCircleView(value: value)
-//                            .frame(width: 200, height: 100)
-//                            .padding()
+        VStack {
             
             
             
             HStack {
-                Image(systemName: "sun.haze")
-                    .font(.system(size: 25)).foregroundColor(.white)
-                VStack{
-                    
-                    //var setDate = Date(weather.sys.sunset * 1000)
-                    
-                    let setDate = convertTimestamp(TimeInterval(weather.sys.sunset), timezoneOffset: weather.timezone)
-                    
-                    
-                    Text("Sunset").foregroundColor(.white).bold()
-                    Text(setDate).font(.system(size: 15.0))
-                        .bold()
-                        .foregroundColor(.white)
-                }
+                
+                HStack {
+                    Image(systemName: "sun.min")
+                        .font(.system(size: 30)).foregroundColor(.white)
+                    VStack{
+                        
+                        let riseDate = convertTimestamp(TimeInterval(weather.sys.sunrise), timezoneOffset: TimeInterval(weather.timezone))
+                        
+                        
+                        
+                        //Date.init(timeIntervalSinceNow: TimeInterval(weather.sys.sunset))
+                        
+                        
+                        //Text(String(weather.main.feelsLike))
+                        
+                        
+                        Text("Sunrise").foregroundColor(.white).bold()
+                        
+                        
+                        Text(riseDate) .font(.system(size: 15.0))
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                }.padding()
+                    .frame(
+                        maxWidth: .infinity,
+                        minHeight: 100
+                    )
+                    .background(Color("orange"))
+                    .cornerRadius(15)
+                    .padding(.trailing, 12)
+                
+                
+                //            SemiCircleView(value: value)
+                //                            .frame(width: 200, height: 100)
+                //                            .padding()
+                
+                
+                
+                HStack {
+                    Image(systemName: "sun.haze")
+                        .font(.system(size: 25)).foregroundColor(.white)
+                    VStack{
+                        
+                        //var setDate = Date(weather.sys.sunset * 1000)
+                        
+                        let setDate = convertTimestamp(TimeInterval(weather.sys.sunset), timezoneOffset: TimeInterval(weather.timezone))
+                        
+                        
+                        Text("Sunset").foregroundColor(.white).bold()
+                        Text(setDate).font(.system(size: 15.0))
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                }.padding()
+                    .frame(
+                        maxWidth: .infinity,
+                        minHeight: 100
+                    )
+                    .background(Color("darkBlue"))
+                    .cornerRadius(15)
+                
             }.padding()
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: 100
-                )
-                .background(Color("darkBlue"))
-                .cornerRadius(15)
-            
-        }.padding()
+        }
     }
 }
 
