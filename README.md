@@ -1,4 +1,4 @@
-![IMG_8174 2](https://github.com/user-attachments/assets/164dca26-4902-43ed-8d7d-9f6f01631619)# RainCheck
+# RainCheck
 
 UI/UX Inspiration: https://dribbble.com/shots/16833006-Weather-App-Dashboard-Design
 
