@@ -1,8 +1,13 @@
-# Weather-App
+![IMG_8174 2](https://github.com/user-attachments/assets/164dca26-4902-43ed-8d7d-9f6f01631619)# RainCheck
 
 UI/UX Inspiration: https://dribbble.com/shots/16833006-Weather-App-Dashboard-Design
 
-|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 09 04](https://user-images.githubusercontent.com/56762634/210137967-2c88ef04-aa0b-4e44-9333-49f8606cbb71.png)|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 09 06](https://user-images.githubusercontent.com/56762634/210137973-9d76c0e9-90d1-4c41-8c77-e53b3b0b12ae.png)|
+Raincheck is a weather-focused app that provides real-time weather updates and forecasts. It allows users to plan their activities based on upcoming weather conditions. The app also integrates reminders, enabling users to reschedule events or outdoor plans when rain or inclement weather is expected.
+
+## Screenshots
+
+|    |     |
 | ------------- | ------------- |
-|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 09 20](https://user-images.githubusercontent.com/56762634/210137979-ddfc6523-f8ed-440c-b975-a656733996b5.png)|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 09 39](https://user-images.githubusercontent.com/56762634/210137990-e1d41433-8cf7-4de8-928f-2b188c6acc10.png)|
-|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 14 05](https://user-images.githubusercontent.com/56762634/210165908-4a74c02f-d624-41a6-9f5b-f5f69bd2e330.png)|![Simulator Screen Shot - iPhone 13 - 2022-12-31 at 14 14 33](https://user-images.githubusercontent.com/56762634/210138032-4d477b6b-8dac-4cab-ba9b-949011b71f18.png)|
+| ![IMG_8175 2](https://github.com/user-attachments/assets/3ba06c63-5d7e-4fe3-9ff7-eeca157db475)  | ![IMG_8176 2](https://github.com/user-attachments/assets/f4a164bb-b4bd-45c3-92c9-17d38071a8d3) |
+| ![IMG_8177 2](https://github.com/user-attachments/assets/05e249d9-437f-4133-b85b-6b3a2f967677)  | ![IMG_8178 2](https://github.com/user-attachments/assets/c05cfb11-9a03-41b6-a5e6-3003c8f32da0)  |
+
